@@ -19,7 +19,7 @@ sh -c "git config --global core.askPass /cred-helper.sh"
 sh -c "git config --global credential.helper cache"
 sh -c "git remote add mirror $*"
 sh -c "echo pushing to $branch branch at $(git remote get-url --push mirror)"
-sh -c "git push mirror $branch"
+sh -c "git push mirror"
 
 sleep $POLL_TIMEOUT
 
@@ -52,7 +52,7 @@ if [ "$ci_status" = "success" ]
 then 
   curl -d '{"state":"success", "target_url": "'${ci_web_url}'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github.antiope-preview+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" 
   exit 0
-elif [ "$ci_status" = "failed" ]
+elif [[ "$ci_status" = "failed" ]] || [[ "$ci_status" = "null" ]]
 then 
   curl -d '{"state":"failure", "target_url": "'${ci_web_url}'", "context": "gitlab-ci"}' -H "Authorization: token ${GITHUB_TOKEN}"  -H "Accept: application/vnd.github.antiope-preview+json" -X POST --silent "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" 
   exit 1
