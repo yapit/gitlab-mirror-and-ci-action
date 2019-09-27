@@ -5,6 +5,10 @@ set -u
 DEFAULT_POLL_TIMEOUT=10
 POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
+echo ${GITHUB_REF}
+# git fetch origin "${GITHUB_REF}":"${GITHUB_REF}"
+# git checkout "${GITHUB_REF}"
+# git checkout -b "${GITHUB_REF}"
 git checkout "${GITHUB_REF:11}"
 
 branch=$(git symbolic-ref --short HEAD)
