@@ -6,12 +6,13 @@ DEFAULT_POLL_TIMEOUT=10
 POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 
 echo ${GITHUB_REF}
-# git fetch origin "${GITHUB_REF}":"${GITHUB_REF}"
-# git checkout "${GITHUB_REF}"
-# git checkout -b "${GITHUB_REF}"
-git checkout "${GITHUB_REF:11}"
+GITHUB_HEAD=${echo ${GITHUB_REF} | sed -e "s/merge/head"}
 
-branch=$(git symbolic-ref --short HEAD)
+git fetch origin "${GITHUB_HEAD}":"${GITHUB_HEAD}"
+git checkout "${GITHUB_HEAD}"
+git checkout -b "${GITHUB_HEAD}"
+
+branch=${GITHUB_HEAD}
 
 sh -c "git config --global credential.username $GITLAB_USERNAME"
 sh -c "git config --global core.askPass /cred-helper.sh"
