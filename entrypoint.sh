@@ -8,8 +8,8 @@ POLL_TIMEOUT=${POLL_TIMEOUT:-$DEFAULT_POLL_TIMEOUT}
 echo ${GITHUB_REF}
 GITHUB_HEAD=`echo ${GITHUB_REF} | sed -e "s/merge/head/g"`
 
-git fetch origin "${GITHUB_HEAD}":"${GITHUB_HEAD}"
-git checkout "${GITHUB_HEAD}"
+git fetch origin "${GITHUB_HEAD}"
+git checkout FETCH_HEAD
 git checkout -b "${GITHUB_HEAD}"
 
 branch=${GITHUB_HEAD}
