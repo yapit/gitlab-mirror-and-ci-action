@@ -15,6 +15,7 @@ git checkout -b "${branch}"
 
 sh -c "git remote add mirror https://${GITLAB_USERNAME}:$(/cred-helper.sh)@${GITLAB_HOSTNAME}/$*"
 sh -c "echo ${GITLAB_PASSWORD} | wc -c"
+sh -c "echo $(/cred-helper.sh) | wc -c"
 # sh -c "echo pushing to ${branch} branch at $(git remote get-url --push mirror)"
 sh -c "git push mirror ${branch}"
 
